@@ -24,8 +24,8 @@ export function location($locationProvider) {
 
 export function restangular(RestangularProvider) {
     RestangularProvider
-        .setBaseUrl('api/1')
-        .setRequestSuffix('/')
+        .setBaseUrl('/api')
+        .setRequestSuffix('')
 }
 
 export function localStorage(localStorageServiceProvider) {

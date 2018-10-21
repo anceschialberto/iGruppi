@@ -5,11 +5,9 @@ export default function dataService(Restangular, localStorageService) {
         loginUser
     }
 
-    function loginUser() {
+    function loginUser(email, password) {
         console.log('loginUser')
-        debugger;
-        return Restangular.all('user_profiles')
-            .getList()
+        return Restangular.one('login').get({ 'email': email, 'password': password })
             .then(data => data.plain())
             .catch(e => console.error(e))
     }

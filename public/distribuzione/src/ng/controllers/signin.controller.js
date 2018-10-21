@@ -4,8 +4,9 @@ export default function signinController($scope, dataService) {
     $scope.userEmail;
     $scope.userPasswd;
 
-    $scope.signin = function() {
-        $scope.userEmail;
-        debugger;
+    $scope.signin = () => {
+        dataService.loginUser($scope.userEmail, $scope.userPasswd).then(data => {
+            debugger;
+        });
     };
 };
