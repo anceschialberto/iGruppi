@@ -228,6 +228,63 @@ class WorkerOrders {
     }
 
 
+
+    /**
+     *
+     *
+     *
+     * testata ordine + disponibili
+     */
+    /**
+     * GET ordine by idordine
+    Param:
+     *      - idordine
+     *      - tipo (totali|utenti) - Default: utenti
+     *      -
+     *
+     * @param $request
+     * @param $response
+     * @param $args
+     */
+    static function orderAvailabilities($request, $response, $args) {
+        Api::setPayload($request->getQueryParams());
+        Api::checkUserToken();
+
+        // get idgroup
+        $userSessionVal = new Zend_Session_Namespace('userSessionVal');
+        $idgroup = $userSessionVal->idgroup;
+
+        $ordCalcObj = self::_loadOrderData(Api::payload("idordine"));
+        if($ordCalcObj === false) {
+            Api::result("KO", ["error" => "Order not found or not accessible!"]);
+        }
+
+        // START TO BUILD DATA
+        $data = [
+            'idordine' => $ordCalcObj->getIdOrdine(),
+            'descrizione' => $ordCalcObj->getDescrizione(),
+            'data_inizio' => $ordCalcObj->getDataInizio("Y-m-d"),
+            'data_fine' => $ordCalcObj->getDataFine("Y-m-d"),
+        ];
+
+
+        // DISPONIBILI
+        if ($ordCalcObj->getProdottiUtenti() > 0) {
+            foreach ($ordCalcObj->getProdottiUtenti() AS $iduser => $dataUser) {
+                $utente = Api::decorateRec('users', $dataUser["user"]);
+                $utente_meta = $utente["meta"];
+                foreach ($utente_meta as $key => $value) {
+                    if ($key == 'disponibilita_'.$ordCalcObj->getIdOrdine()) {
+                        $data_destinatari['utente'] = $utente;
+                        $data["disponibili"][] = $data_destinatari;
+                    }
+                }
+            }
+        }
+
+        Api::result("OK", ["data" => $data]);
+    }
+
     private static function _loadOrderData($idordine)
     {
 

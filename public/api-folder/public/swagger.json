@@ -1,586 +1,702 @@
 {
-  "swagger" : "2.0",
-  "info" : {
-    "description" : "This is the IGRUPPI API",
-    "version" : "1.0.2",
-    "title" : "IGRUPPI API",
-    "contact" : {
-      "email" : "info@igruppi.com"
+  "swagger": "2.0",
+  "info": {
+    "description": "This is the IGRUPPI API",
+    "version": "1.0.2",
+    "title": "IGRUPPI API",
+    "contact": {
+      "email": "info@igruppi.com"
     },
-    "license" : {
-      "name" : "Apache 2.0",
-      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
-  "basePath" : "/api/",
-  "schemes" : [ "http" ],
-  "paths" : {
-    "/login" : {
-      "get" : {
-        "summary" : "ottiene token utente",
-        "operationId" : "loginLogin",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "email",
-          "in" : "query",
-          "description" : "the user email",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "passwd",
-          "in" : "query",
-          "description" : "the user password",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "api response",
-            "schema" : {
-              "$ref" : "#/definitions/LoginApiResponse"
+  "basePath": "/api/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/login": {
+      "get": {
+        "summary": "ottiene token utente",
+        "operationId": "loginLogin",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "description": "the user email",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "passwd",
+            "in": "query",
+            "description": "the user password",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "api response",
+            "schema": {
+              "$ref": "#/definitions/LoginApiResponse"
             }
           }
         }
       }
     },
-    "/groups" : {
-      "get" : {
-        "summary" : "elenco gruppi",
-        "description" : "Returns all the groups in the system\n",
-        "operationId" : "groupList",
-        "produces" : [ "application/json" ],
-        "parameters" : [ ],
-        "responses" : {
-          "200" : {
-            "description" : "search results matching criteria",
-            "schema" : {
-              "$ref" : "#/definitions/ApiResponse"
+    "/groups": {
+      "get": {
+        "summary": "elenco gruppi",
+        "description": "Returns all the groups in the system\n",
+        "operationId": "groupList",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "search results matching criteria",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
             }
           }
         }
       }
     },
-    "/groupInfo" : {
-      "get" : {
-        "summary" : "ottiene token utente",
-        "operationId" : "groupInfo",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "token",
-          "in" : "query",
-          "description" : "auth user token",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "id",
-          "in" : "query",
-          "description" : "the group id",
-          "required" : true,
-          "type" : "integer"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "matching info group",
-            "schema" : {
-              "$ref" : "#/definitions/ApiResponse"
+    "/groupInfo": {
+      "get": {
+        "summary": "ottiene token utente",
+        "operationId": "groupInfo",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "auth user token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "the group id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "matching info group",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
             }
           }
         }
       }
     },
-    "/groupUsers" : {
-      "get" : {
-        "summary" : "ottiene tutti gli utenti di un gruppo",
-        "operationId" : "groupUsers",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "token",
-          "in" : "query",
-          "description" : "auth user token",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "id",
-          "in" : "query",
-          "description" : "the group id",
-          "required" : true,
-          "type" : "integer"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "search results matching criteria",
-            "schema" : {
-              "$ref" : "#/definitions/ApiResponse"
+    "/groupUsers": {
+      "get": {
+        "summary": "ottiene tutti gli utenti di un gruppo",
+        "operationId": "groupUsers",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "auth user token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "the group id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "search results matching criteria",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
             }
           }
         }
       }
     },
-    "/produttori" : {
-      "get" : {
-        "summary" : "elenco produttori",
-        "description" : "Returns all the produttori in the system\n",
-        "operationId" : "produttoriList",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "token",
-          "in" : "query",
-          "description" : "auth user token",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "search results matching criteria",
-            "schema" : {
-              "$ref" : "#/definitions/LoginApiResponse"
+    "/produttori": {
+      "get": {
+        "summary": "elenco produttori",
+        "description": "Returns all the produttori in the system\n",
+        "operationId": "produttoriList",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "auth user token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "search results matching criteria",
+            "schema": {
+              "$ref": "#/definitions/LoginApiResponse"
             }
           }
         }
       }
     },
-    "/produttoriInfo" : {
-      "get" : {
-        "summary" : "ottiene token utente",
-        "operationId" : "produttoriInfo",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "token",
-          "in" : "query",
-          "description" : "auth user token",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "id",
-          "in" : "query",
-          "description" : "the produttori id",
-          "required" : true,
-          "type" : "integer"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "matching info group",
-            "schema" : {
-              "$ref" : "#/definitions/ApiResponse"
+    "/produttoriInfo": {
+      "get": {
+        "summary": "ottiene token utente",
+        "operationId": "produttoriInfo",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "auth user token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "the produttori id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "matching info group",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
             }
           }
         }
       }
     },
-    "/produttoriProducts" : {
-      "get" : {
-        "summary" : "ottiene tutti gli utenti di un gruppo",
-        "operationId" : "produttoriProducs",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "token",
-          "in" : "query",
-          "description" : "auth user token",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "id",
-          "in" : "query",
-          "description" : "the produttori id",
-          "required" : true,
-          "type" : "integer"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "search results matching criteria",
-            "schema" : {
-              "$ref" : "#/definitions/ApiResponse"
+    "/produttoriProducts": {
+      "get": {
+        "summary": "ottiene tutti gli utenti di un gruppo",
+        "operationId": "produttoriProducs",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "auth user token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "the produttori id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "search results matching criteria",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
             }
           }
         }
       }
     },
-    "/products" : {
-      "get" : {
-        "summary" : "ottiene un elenco di prodotti",
-        "operationId" : "prodottiProducs",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "token",
-          "in" : "query",
-          "description" : "auth user token",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "id",
-          "in" : "query",
-          "description" : "the produttori id",
-          "required" : false,
-          "type" : "integer"
-        }, {
-          "name" : "query",
-          "in" : "query",
-          "description" : "stringa da ricercare",
-          "required" : false,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "returna a product array",
-            "schema" : {
-              "$ref" : "#/definitions/ApiResponse"
+    "/products": {
+      "get": {
+        "summary": "ottiene un elenco di prodotti",
+        "operationId": "prodottiProducs",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "auth user token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "the produttori id",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "stringa da ricercare",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "returna a product array",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
             }
           }
         }
       }
     },
-    "/productInfo" : {
-      "get" : {
-        "summary" : "returns detail on product",
-        "operationId" : "productInfo",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "token",
-          "in" : "query",
-          "description" : "auth user token",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "id",
-          "in" : "query",
-          "description" : "the produttori id",
-          "required" : true,
-          "type" : "integer"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "product object",
-            "schema" : {
-              "$ref" : "#/definitions/ApiResponse"
+    "/productInfo": {
+      "get": {
+        "summary": "returns detail on product",
+        "operationId": "productInfo",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "auth user token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "the produttori id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "product object",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
             }
           }
         }
       }
     },
-    "/orders" : {
-      "get" : {
-        "summary" : "returns order details",
-        "operationId" : "orders",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "token",
-          "in" : "query",
-          "description" : "auth user token",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "data-da",
-          "in" : "query",
-          "description" : "start date (Ymd)",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "data-a",
-          "in" : "query",
-          "description" : "end date (Ymd)",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "idstato",
-          "in" : "query",
-          "description" : "end date (Ymd)",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "stato",
-          "in" : "query",
-          "description" : "Pianificato/Aperto/Chiuso/Inviato/Arrivato/Consegnato/Archiviato",
-          "required" : false,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "order aggregated object",
-            "schema" : {
-              "$ref" : "#/definitions/ApiResponse"
+    "/orders": {
+      "get": {
+        "summary": "returns order details",
+        "operationId": "orders",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "auth user token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "data-da",
+            "in": "query",
+            "description": "start date (Ymd)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "data-a",
+            "in": "query",
+            "description": "end date (Ymd)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "idstato",
+            "in": "query",
+            "description": "end date (Ymd)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "stato",
+            "in": "query",
+            "description": "Pianificato/Aperto/Chiuso/Inviato/Arrivato/Consegnato/Archiviato",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "order aggregated object",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
             }
           }
         }
       }
     },
-    "/orderInfo" : {
-      "get" : {
-        "summary" : "returns order details",
-        "operationId" : "orderInfo",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "token",
-          "in" : "query",
-          "description" : "auth user token",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "idordine",
-          "in" : "query",
-          "description" : "the order id",
-          "required" : true,
-          "type" : "integer"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "order aggregated object",
-            "schema" : {
-              "$ref" : "#/definitions/ApiResponse"
+    "/orderInfo": {
+      "get": {
+        "summary": "returns order details",
+        "operationId": "orderInfo",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "auth user token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "idordine",
+            "in": "query",
+            "description": "the order id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "order aggregated object",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
             }
           }
         }
       }
     },
-    "/orderDelivery" : {
-      "get" : {
-        "summary" : "returns order details",
-        "operationId" : "orderDelivery",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "token",
-          "in" : "query",
-          "description" : "auth user token",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "idordine",
-          "in" : "query",
-          "description" : "the order id",
-          "required" : true,
-          "type" : "integer"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "order delivery object",
-            "schema" : {
-              "$ref" : "#/definitions/ApiResponse"
+    "/orderDelivery": {
+      "get": {
+        "summary": "returns order details",
+        "operationId": "orderDelivery",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "auth user token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "idordine",
+            "in": "query",
+            "description": "the order id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "order delivery object",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
             }
           }
         }
       }
     },
-    "/metaSet" : {
-      "get" : {
-        "summary" : "returns meta field",
-        "operationId" : "metaSet",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "token",
-          "in" : "query",
-          "description" : "auth user token",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "table",
-          "in" : "query",
-          "description" : "table to add meta field (users/groups/produttori/orders)",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "id",
-          "in" : "query",
-          "description" : "id record to add meta field",
-          "required" : true,
-          "type" : "integer"
-        }, {
-          "name" : "field",
-          "in" : "query",
-          "description" : "name of the meta field",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "val",
-          "in" : "query",
-          "description" : "value for the meta field",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "order aggregated object",
-            "schema" : {
-              "$ref" : "#/definitions/ApiResponse"
+    "/orderAvailabilities": {
+      "get": {
+        "summary": "returns order availabilites",
+        "operationId": "orderAvailabilities",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "auth user token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "idordine",
+            "in": "query",
+            "description": "the order id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "order delivery object",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
             }
           }
         }
       }
     },
-    "/metaDelete" : {
-      "get" : {
-        "summary" : "returns meta field",
-        "operationId" : "metaDelete",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "token",
-          "in" : "query",
-          "description" : "auth user token",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "table",
-          "in" : "query",
-          "description" : "table to add meta field (users/groups/produttori/orders)",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "id",
-          "in" : "query",
-          "description" : "id record to delete meta field",
-          "required" : true,
-          "type" : "integer"
-        }, {
-          "name" : "field",
-          "in" : "query",
-          "description" : "name of the meta field",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "order aggregated object",
-            "schema" : {
-              "$ref" : "#/definitions/ApiResponse"
+    "/metaSet": {
+      "get": {
+        "summary": "returns meta field",
+        "operationId": "metaSet",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "auth user token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "table",
+            "in": "query",
+            "description": "table to add meta field (users/groups/produttori/orders)",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id record to add meta field",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "field",
+            "in": "query",
+            "description": "name of the meta field",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "val",
+            "in": "query",
+            "description": "value for the meta field",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "order aggregated object",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          }
+        }
+      }
+    },
+    "/metaDelete": {
+      "get": {
+        "summary": "returns meta field",
+        "operationId": "metaDelete",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "auth user token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "table",
+            "in": "query",
+            "description": "table to add meta field (users/groups/produttori/orders)",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id record to delete meta field",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "field",
+            "in": "query",
+            "description": "name of the meta field",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "order aggregated object",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
             }
           }
         }
       }
     }
   },
-  "definitions" : {
-    "ApiResponse" : {
-      "properties" : {
-        "status" : {
-          "type" : "string",
-          "example" : "OK",
-          "readOnly" : true
+  "definitions": {
+    "ApiResponse": {
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "OK",
+          "readOnly": true
         },
-        "data" : {
-          "type" : "object",
-          "properties" : { }
+        "data": {
+          "type": "object",
+          "properties": {}
         },
-        "error" : {
-          "type" : "string",
-          "example" : "User not found"
+        "error": {
+          "type": "string",
+          "example": "User not found"
         }
       },
-      "example" : {
-        "data" : "{}",
-        "error" : "User not found",
-        "status" : "OK"
+      "example": {
+        "data": "{}",
+        "error": "User not found",
+        "status": "OK"
       }
     },
-    "LoginApiResponse" : {
-      "properties" : {
-        "status" : {
-          "type" : "string",
-          "example" : "OK",
-          "readOnly" : true
+    "LoginApiResponse": {
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "OK",
+          "readOnly": true
         },
-        "token" : {
-          "type" : "string",
-          "example" : "0023-321321312"
+        "token": {
+          "type": "string",
+          "example": "0023-321321312"
         }
       },
-      "example" : {
-        "status" : "OK",
-        "token" : "0023-321321312"
+      "example": {
+        "status": "OK",
+        "token": "0023-321321312"
       }
     },
-    "User" : {
-      "required" : [ "cognome", "email", "nome" ],
-      "properties" : {
-        "iduser" : {
-          "type" : "integer",
-          "example" : 1,
-          "readOnly" : true
+    "User": {
+      "required": [
+        "cognome",
+        "email",
+        "nome"
+      ],
+      "properties": {
+        "iduser": {
+          "type": "integer",
+          "example": 1,
+          "readOnly": true
         },
-        "nome" : {
-          "type" : "string",
-          "example" : "Davide"
+        "nome": {
+          "type": "string",
+          "example": "Davide"
         },
-        "cognome" : {
-          "type" : "string",
-          "example" : "Gullo"
+        "cognome": {
+          "type": "string",
+          "example": "Gullo"
         },
-        "email" : {
-          "type" : "string",
-          "format" : "email",
-          "example" : "info@igruppi.com"
+        "email": {
+          "type": "string",
+          "format": "email",
+          "example": "info@igruppi.com"
         },
-        "in_prova" : {
-          "type" : "string",
-          "example" : "N"
+        "in_prova": {
+          "type": "string",
+          "example": "N"
         },
-        "indirizzo" : {
-          "type" : "string",
-          "example" : ""
+        "indirizzo": {
+          "type": "string",
+          "example": ""
         },
-        "localita" : {
-          "type" : "string",
-          "example" : ""
+        "localita": {
+          "type": "string",
+          "example": ""
         },
-        "note" : {
-          "type" : "string",
-          "example" : ""
+        "note": {
+          "type": "string",
+          "example": ""
         },
-        "num_members" : {
-          "type" : "integer",
-          "example" : 4
+        "num_members": {
+          "type": "integer",
+          "example": 4
         },
-        "provincia" : {
-          "type" : "string",
-          "example" : ""
+        "provincia": {
+          "type": "string",
+          "example": ""
         },
-        "role" : {
-          "type" : "string",
-          "example" : "User"
+        "role": {
+          "type": "string",
+          "example": "User"
         },
-        "tel" : {
-          "type" : "string",
-          "example" : ""
+        "tel": {
+          "type": "string",
+          "example": ""
         },
-        "idgroup" : {
-          "type" : "integer",
-          "example" : 1
+        "idgroup": {
+          "type": "integer",
+          "example": 1
         },
-        "attivo" : {
-          "type" : "string",
-          "example" : "S"
+        "attivo": {
+          "type": "string",
+          "example": "S"
         },
-        "contabile" : {
-          "type" : "string",
-          "example" : "S"
+        "contabile": {
+          "type": "string",
+          "example": "S"
         },
-        "fondatore" : {
-          "type" : "string",
-          "example" : "S"
+        "fondatore": {
+          "type": "string",
+          "example": "S"
         }
       }
     },
-    "Group" : {
-      "required" : [ "nome" ],
-      "properties" : {
-        "idgroup" : {
-          "type" : "integer",
-          "example" : 1,
-          "readOnly" : true
+    "Group": {
+      "required": [
+        "nome"
+      ],
+      "properties": {
+        "idgroup": {
+          "type": "integer",
+          "example": 1,
+          "readOnly": true
         },
-        "nome" : {
-          "type" : "string",
-          "example" : "GAS Numero 1"
+        "nome": {
+          "type": "string",
+          "example": "GAS Numero 1"
         },
-        "descrizione" : {
-          "type" : "string",
-          "example" : "https://www.igruppi.com"
+        "descrizione": {
+          "type": "string",
+          "example": "https://www.igruppi.com"
         },
-        "provincia" : {
-          "type" : "string",
-          "example" : "RE"
+        "provincia": {
+          "type": "string",
+          "example": "RE"
         },
-        "data_creazione" : {
-          "type" : "string",
-          "format" : "date",
-          "example" : "2012-12-07"
+        "data_creazione": {
+          "type": "string",
+          "format": "date",
+          "example": "2012-12-07"
         }
       }
     }
