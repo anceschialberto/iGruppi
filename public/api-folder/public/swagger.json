@@ -454,6 +454,53 @@
         }
       }
     },
+    "/setOrderAvailability": {
+      "get": {
+        "summary": "set order availability",
+        "operationId": "setOrderAvailability",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "auth user token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "idordine",
+            "in": "query",
+            "description": "the order id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "maxKmRadius",
+            "in": "query",
+            "description": "max km radius",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "maxNumberOfOrders",
+            "in": "query",
+            "description": "max number of order the user can take",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "order delivery object",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          }
+        }
+      }
+    },
     "/metaSet": {
       "get": {
         "summary": "returns meta field",

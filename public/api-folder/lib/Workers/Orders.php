@@ -293,6 +293,32 @@ class WorkerOrders {
         Api::result("OK", ["data" => $data]);
     }
 
+    static function setOrderAvailability($request, $response, $args) {
+        Api::setPayload($request->getQueryParams());
+        Api::checkUserToken();
+        $callerUser = Api::decorateRec("users", Api::getUser());
+
+        $orderId = Api::payload("idordine");
+        $maxKmRadius = Api::payload("maxKmRadius");
+        $maxNumberOfOrders = Api::payload("maxNumberOfOrders");
+
+        $ordCalcObj = self::_loadOrderData($orderId);
+        if($ordCalcObj === false) {
+            Api::result("KO", ["error" => "Order not found or not accessible!"]);
+        }
+
+        $userId = $callerUser['iduser'];
+        Api::setMeta("users", $userId, 'disponibilita_'.$orderId, 'yes');
+        Api::setMeta("users", $userId, 'disponibilita_'.$orderId.'_raggio_km', $maxKmRadius);
+        Api::setMeta("users", $userId, 'disponibilita_'.$orderId.'_posti_disponibili', $maxNumberOfOrders);
+
+        $data = [
+            'idordine' => $orderId
+        ];
+
+        Api::result("OK", ["data" => $data]);
+    }
+
     private static function _loadOrderData($idordine)
     {
 
