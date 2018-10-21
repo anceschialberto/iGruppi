@@ -249,6 +249,7 @@ class WorkerOrders {
     static function orderAvailabilities($request, $response, $args) {
         Api::setPayload($request->getQueryParams());
         Api::checkUserToken();
+        $callerUser = Api::decorateRec("users", Api::getUser());
 
         // get idgroup
         $userSessionVal = new Zend_Session_Namespace('userSessionVal');
@@ -260,8 +261,9 @@ class WorkerOrders {
         }
 
         // START TO BUILD DATA
+        $idOrdine = $ordCalcObj->getIdOrdine();
         $data = [
-            'idordine' => $ordCalcObj->getIdOrdine(),
+            'idordine' => $idOrdine,
             'descrizione' => $ordCalcObj->getDescrizione(),
             'data_inizio' => $ordCalcObj->getDataInizio("Y-m-d"),
             'data_fine' => $ordCalcObj->getDataFine("Y-m-d"),
@@ -273,10 +275,16 @@ class WorkerOrders {
             foreach ($ordCalcObj->getProdottiUtenti() AS $iduser => $dataUser) {
                 $utente = Api::decorateRec('users', $dataUser["user"]);
                 $utente_meta = $utente["meta"];
+
                 foreach ($utente_meta as $key => $value) {
-                    if ($key == 'disponibilita_'.$ordCalcObj->getIdOrdine()) {
-                        $data_destinatari['utente'] = $utente;
-                        $data["disponibili"][] = $data_destinatari;
+                    if ($key == 'disponibilita_'. $idOrdine) {
+                        $distanceInKM = Api::vincentyGreatCircleDistance($utente['lat'], $utente['lng'], $callerUser['lat'], $callerUser['lng']);
+                        $maxKmRadius = intval($utente_meta['disponibilita_' . $idOrdine . '_raggio_km']);
+
+                        if ($distanceInKM <= $maxKmRadius) {
+                            $data_destinatari['utente'] = $utente;
+                            $data["disponibili"][] = $data_destinatari;
+                        }
                     }
                 }
             }
