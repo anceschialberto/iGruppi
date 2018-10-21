@@ -4,6 +4,8 @@ export default function dataService(Restangular, localStorageService) {
     return {
         loginUser,
         orderInfo,
+        setUserOrderAvailability,
+        orderAvailabilities,
         setCookie,
         getCookie
     }
@@ -18,6 +20,20 @@ export default function dataService(Restangular, localStorageService) {
     function orderInfo(idOrdine) {
         console.log('orderInfo')
         return Restangular.one('orderInfo').get({ 'idordine': idOrdine })
+            .then(data => data.plain().data)
+            .catch(e => console.error(e))
+    }
+
+    function setUserOrderAvailability(idordine, maxKmRadius, maxNumberOfOrders) {
+        console.log('setUserOrderAvailability')
+        return Restangular.one('setUserOrderAvailability').get({ idordine, maxKmRadius, maxNumberOfOrders })
+            .then(data => data.plain())
+            .catch(e => console.error(e))
+    }
+
+    function orderAvailabilities(idordine) {
+        console.log('orderAvailabilities')
+        return Restangular.one('orderAvailabilities').get({ idordine })
             .then(data => data.plain().data)
             .catch(e => console.error(e))
     }

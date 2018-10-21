@@ -6,7 +6,7 @@
 </div>
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
     <h1 class="display-4">Distribuzione</h1>
-    <p class="lead">Il tuo ordine #139486 è pronto per il ritiro</p>
+    <p class="lead">Il tuo ordine #713 è pronto per il ritiro</p>
 </div>
 <div class="container">
     <div class="row mb-5">
@@ -71,39 +71,58 @@
     <div class="row mb-5">
         <div class="col-md-6 offset-md-3" style="text-align:center">
             <button type="button" class="btn btn-primary btn-lg" ng-click="needHelp = false;">Posso ritirare l'ordine!</button>
-            <button type="button" class="btn btn-secondary btn-lg" ng-click="needHelp = true;">Non riesco a ritirare
+            <button type="button" class="btn btn-secondary btn-lg" ng-click="needHelp = true;askAvailability()">Non
+                riesco a ritirare
                 l'ordine</button>
         </div>
     </div>
     <div class="row" ng-show="needHelp !== 'undefined' && needHelp === false">
-        <div class="col-md-6">
-            <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="row mb-2">
                 <div class="col-md-12">
                     <h2>Ti va di aiutare i GASisti in difficoltà?</h2>
                     <p>renditi disponibile a ritirare l'ordine per conto di altri!</p>
                 </div>
             </div>
-            <div class="row">
+            <div class="row mb-5">
                 <div class="col-md-6">
                     <p>Quanti utenti vuoi aiutare?</p>
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Dropdown button
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">1</a>
-                            <a class="dropdown-item" href="#">2</a>
-                            <a class="dropdown-item" href="#">3</a>
-                        </div>
+                    <div class="input-group input-group-sm">
+                        <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                            ng-model="helpDetails.availability">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <p>Entro quale raggio da casa tua?</p>
                     <div class="input-group input-group-sm">
-                        <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                        <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                            ng-model="helpDetails.radius">
                         <div class="input-group-append">
                             <span class="input-group-text" id="inputGroup-sizing-sm">km</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-md-12" style="text-align:right">
+                    <button type="button" class="btn btn-primary btn-xs" ng-click="sendAvailability();" data-toggle="modal"
+                        data-target="#availabilityModal">Conferma</button>
+                </div>
+                <div id="availabilityModal" class="modal" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Grazie</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>la tua richiesta è stata confermata!</p>
+                            </div>
+                            <div class="modal-footer">
+                                <a href="/" class="btn btn-primary">OK</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -111,9 +130,42 @@
         </div>
     </div>
     <div class="row" ng-show="needHelp !== 'undefined' && needHelp === true">
-        <div class="col-md-6">
-            <h2>Non riesci a ritirare il tuo ordine?</h2>
-            <p>GASisti sono qua per aiutarti!</p>
+        <div class="col-md-6 offset-md-3">
+            <div class="row mb-2">
+                <div class="col-md-12">
+                    <h2>Non riesci a ritirare il tuo ordine?</h2>
+                    <p>questi GASisti sono qua per aiutarti:</p>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-12">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="user in userAvailability">
+                            {{user.nome}} {{user.cognome}}
+                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#bookModal"
+                                style="float:right">Prenota</button>
+                        </li>
+                        <div id="bookModal" class="modal" tabindex="-1" role="dialog">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Grazie</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>la tua richiesta è stata confermata!</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="/" class="btn btn-primary">OK</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </div>
