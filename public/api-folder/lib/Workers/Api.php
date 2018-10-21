@@ -95,6 +95,11 @@ class Api
         self::$user = $u;
     }
 
+    static function getUser()
+    {
+        return self::$user;
+    }
+
     static function getUserField($key)
     {
         if ($key) {
@@ -108,15 +113,8 @@ class Api
 
     static function checkUserToken($token = "")
     {
-        if ($token == "") {
-            $token = self::payload("token");
-        }
-        if ($token == "" && isset($_SERVER['HTTP_BEARER'])) {
-
-            $token = $headerStringValue = $_SERVER['HTTP_BEARER'];
-        }
-        $parts = explode("-", $token);
-        $id = $parts[0];
+        $token = self::getToken($token);
+        $id = self::getUserId($token);
 
         $sql = "SELECT u.*, ug.attivo, ug.fondatore, ug.contabile, g.nome AS gruppo, g.idgroup "
             . "FROM users AS u LEFT JOIN users_group AS ug ON u.iduser=ug.iduser "
@@ -183,5 +181,60 @@ class Api
             }
         }
         return $data;
+    }
+
+    /**
+     * @param $token
+     * @return array|mixed|string
+     */
+    public static function getToken($token)
+    {
+        if ($token == "") {
+            $token = self::payload("token");
+        }
+        if ($token == "" && isset($_SERVER['HTTP_BEARER'])) {
+
+            $token = $headerStringValue = $_SERVER['HTTP_BEARER'];
+        }
+        return $token;
+    }
+
+    /**
+     * @param $token
+     * @return mixed
+     */
+    public static function getUserId($token)
+    {
+        $parts = explode("-", $token);
+        $id = $parts[0];
+        return $id;
+    }
+
+    /**
+     * Calculates the great-circle distance between two points, with
+     * the Vincenty formula.
+     * @param float $latitudeFrom Latitude of start point in [deg decimal]
+     * @param float $longitudeFrom Longitude of start point in [deg decimal]
+     * @param float $latitudeTo Latitude of target point in [deg decimal]
+     * @param float $longitudeTo Longitude of target point in [deg decimal]
+     * @param float $earthRadius Mean earth radius in [m]
+     * @return float Distance between points in [m] (same as earthRadius)
+     */
+    public static function vincentyGreatCircleDistance(
+        $latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo, $earthRadius = 6371000)
+    {
+        // convert from degrees to radians
+        $latFrom = deg2rad($latitudeFrom);
+        $lonFrom = deg2rad($longitudeFrom);
+        $latTo = deg2rad($latitudeTo);
+        $lonTo = deg2rad($longitudeTo);
+
+        $lonDelta = $lonTo - $lonFrom;
+        $a = pow(cos($latTo) * sin($lonDelta), 2) +
+            pow(cos($latFrom) * sin($latTo) - sin($latFrom) * cos($latTo) * cos($lonDelta), 2);
+        $b = sin($latFrom) * sin($latTo) + cos($latFrom) * cos($latTo) * cos($lonDelta);
+
+        $angle = atan2(sqrt($a), $b);
+        return ($angle * $earthRadius) / 1000;
     }
 }

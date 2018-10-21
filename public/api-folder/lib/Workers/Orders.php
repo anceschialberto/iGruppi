@@ -228,6 +228,97 @@ class WorkerOrders {
     }
 
 
+
+    /**
+     *
+     *
+     *
+     * testata ordine + disponibili
+     */
+    /**
+     * GET ordine by idordine
+    Param:
+     *      - idordine
+     *      - tipo (totali|utenti) - Default: utenti
+     *      -
+     *
+     * @param $request
+     * @param $response
+     * @param $args
+     */
+    static function orderAvailabilities($request, $response, $args) {
+        Api::setPayload($request->getQueryParams());
+        Api::checkUserToken();
+        $callerUser = Api::decorateRec("users", Api::getUser());
+
+        // get idgroup
+        $userSessionVal = new Zend_Session_Namespace('userSessionVal');
+        $idgroup = $userSessionVal->idgroup;
+
+        $ordCalcObj = self::_loadOrderData(Api::payload("idordine"));
+        if($ordCalcObj === false) {
+            Api::result("KO", ["error" => "Order not found or not accessible!"]);
+        }
+
+        // START TO BUILD DATA
+        $idOrdine = $ordCalcObj->getIdOrdine();
+        $data = [
+            'idordine' => $idOrdine,
+            'descrizione' => $ordCalcObj->getDescrizione(),
+            'data_inizio' => $ordCalcObj->getDataInizio("Y-m-d"),
+            'data_fine' => $ordCalcObj->getDataFine("Y-m-d"),
+        ];
+
+
+        // DISPONIBILI
+        if ($ordCalcObj->getProdottiUtenti() > 0) {
+            foreach ($ordCalcObj->getProdottiUtenti() AS $iduser => $dataUser) {
+                $utente = Api::decorateRec('users', $dataUser["user"]);
+                $utente_meta = $utente["meta"];
+
+                foreach ($utente_meta as $key => $value) {
+                    if ($key == 'disponibilita_'. $idOrdine) {
+                        $distanceInKM = Api::vincentyGreatCircleDistance($utente['lat'], $utente['lng'], $callerUser['lat'], $callerUser['lng']);
+                        $maxKmRadius = intval($utente_meta['disponibilita_' . $idOrdine . '_raggio_km']);
+
+                        if ($distanceInKM <= $maxKmRadius) {
+                            $data_destinatari['utente'] = $utente;
+                            $data["disponibili"][] = $data_destinatari;
+                        }
+                    }
+                }
+            }
+        }
+
+        Api::result("OK", ["data" => $data]);
+    }
+
+    static function setUserOrderAvailability($request, $response, $args) {
+        Api::setPayload($request->getQueryParams());
+        Api::checkUserToken();
+        $callerUser = Api::decorateRec("users", Api::getUser());
+
+        $orderId = Api::payload("idordine");
+        $maxKmRadius = Api::payload("maxKmRadius");
+        $maxNumberOfOrders = Api::payload("maxNumberOfOrders");
+
+        $ordCalcObj = self::_loadOrderData($orderId);
+        if($ordCalcObj === false) {
+            Api::result("KO", ["error" => "Order not found or not accessible!"]);
+        }
+
+        $userId = $callerUser['iduser'];
+        Api::setMeta("users", $userId, 'disponibilita_'.$orderId, 'yes');
+        Api::setMeta("users", $userId, 'disponibilita_'.$orderId.'_raggio_km', $maxKmRadius);
+        Api::setMeta("users", $userId, 'disponibilita_'.$orderId.'_posti_disponibili', $maxNumberOfOrders);
+
+        $data = [
+            'idordine' => $orderId
+        ];
+
+        Api::result("OK", ["data" => $data]);
+    }
+
     private static function _loadOrderData($idordine)
     {
 
