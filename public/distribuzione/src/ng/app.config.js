@@ -1,6 +1,7 @@
 routing.$inject = ['$routeProvider']
 location.$inject = ['$locationProvider']
 restangular.$inject = ['RestangularProvider']
+localStorage.$inject = ['localStorageServiceProvider']
 
 export function routing($routeProvider) {
     $routeProvider
@@ -25,4 +26,12 @@ export function restangular(RestangularProvider) {
     RestangularProvider
         .setBaseUrl('api/1')
         .setRequestSuffix('/')
+}
+
+export function localStorage(localStorageServiceProvider) {
+    localStorageServiceProvider
+        .setPrefix('igruppi')
+        .setStorageType('sessionStorage')
+        .setDefaultToCookie(false)
+        .setNotify(true, true)
 }
