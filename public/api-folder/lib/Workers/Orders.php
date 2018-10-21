@@ -280,8 +280,9 @@ class WorkerOrders {
                     if ($key == 'disponibilita_'. $idOrdine) {
                         $distanceInKM = Api::vincentyGreatCircleDistance($utente['lat'], $utente['lng'], $callerUser['lat'], $callerUser['lng']);
                         $maxKmRadius = intval($utente_meta['disponibilita_' . $idOrdine . '_raggio_km']);
+                        $bookedOrders = intval($utente_meta['disponibilita_' . $idOrdine . '_posti_disponibili']);
 
-                        if ($distanceInKM <= $maxKmRadius) {
+                        if (($distanceInKM <= $maxKmRadius) and ($bookedOrders > 0)) {
                             $data_destinatari['utente'] = $utente;
                             $data["disponibili"][] = $data_destinatari;
                         }
@@ -310,7 +311,35 @@ class WorkerOrders {
         $userId = $callerUser['iduser'];
         Api::setMeta("users", $userId, 'disponibilita_'.$orderId, 'yes');
         Api::setMeta("users", $userId, 'disponibilita_'.$orderId.'_raggio_km', $maxKmRadius);
+        Api::setMeta("users", $userId, 'disponibilita_'.$orderId.'_posti_offerti', $maxNumberOfOrders);
         Api::setMeta("users", $userId, 'disponibilita_'.$orderId.'_posti_disponibili', $maxNumberOfOrders);
+
+        $data = [
+            'idordine' => $orderId
+        ];
+
+        Api::result("OK", ["data" => $data]);
+    }
+
+    static function bookUserOrderAvailability($request, $response, $args) {
+        Api::setPayload($request->getQueryParams());
+        Api::checkUserToken();
+        $callerUser = Api::decorateRec("users", Api::getUser());
+
+        $orderId = Api::payload("idordine");
+        $toBookUserID = Api::payload("toBookUserId");
+
+        $ordCalcObj = self::_loadOrderData($orderId);
+        if($ordCalcObj === false) {
+            Api::result("KO", ["error" => "Order not found or not accessible!"]);
+        }
+
+        $bookedOrders = intval(Api::getMeta("users", $toBookUserID, 'disponibilita_'.$orderId.'_posti_disponibili'));
+        if ($bookedOrders == 0) {
+            Api::result("KO", ["error" => "Cannot place a book on this user anymore."]);
+        }
+
+        Api::setMeta("users", $toBookUserID, 'disponibilita_'.$orderId.'_posti_disponibili', --$bookedOrders);
 
         $data = [
             'idordine' => $orderId

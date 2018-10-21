@@ -501,6 +501,46 @@
         }
       }
     },
+    "/bookUserOrderAvailability": {
+      "get": {
+        "summary": "book order availability",
+        "operationId": "bookUserOrderAvailability",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "auth user token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "idordine",
+            "in": "query",
+            "description": "the order id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "toBookUserId",
+            "in": "query",
+            "description": "user id of the user to book",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "order object",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          }
+        }
+      }
+    },
     "/metaSet": {
       "get": {
         "summary": "returns meta field",
