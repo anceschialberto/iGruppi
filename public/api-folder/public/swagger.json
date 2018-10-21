@@ -454,10 +454,10 @@
         }
       }
     },
-    "/setOrderAvailability": {
+    "/setUserOrderAvailability": {
       "get": {
         "summary": "set order availability",
-        "operationId": "setOrderAvailability",
+        "operationId": "setUserOrderAvailability",
         "produces": [
           "application/json"
         ],

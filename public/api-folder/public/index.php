@@ -106,7 +106,7 @@ $app->GET('/api/orders', "WorkerOrders::orders" );
 $app->GET('/api/orderInfo', "WorkerOrders::orderInfo" );
 $app->GET('/api/orderDelivery', "WorkerOrders::orderDelivery" );
 $app->GET('/api/orderAvailabilities', "WorkerOrders::orderAvailabilities" );
-$app->GET('/api/setOrderAvailability', "WorkerOrders::setOrderAvailability" );
+$app->GET('/api/setUserOrderAvailability', "WorkerOrders::setUserOrderAvailability" );
 $app->GET('/api/products', "WorkerProducts::products" );
 $app->GET('/api/productInfo', "WorkerProducts::productsInfo" );
 $app->GET('/api/metaSet', "WorkerMeta::metaSet" );

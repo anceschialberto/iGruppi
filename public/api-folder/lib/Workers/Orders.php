@@ -293,7 +293,7 @@ class WorkerOrders {
         Api::result("OK", ["data" => $data]);
     }
 
-    static function setOrderAvailability($request, $response, $args) {
+    static function setUserOrderAvailability($request, $response, $args) {
         Api::setPayload($request->getQueryParams());
         Api::checkUserToken();
         $callerUser = Api::decorateRec("users", Api::getUser());
